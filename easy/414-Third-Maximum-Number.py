@@ -11,4 +11,3 @@ class Solution(object):
             if compat[len(compat) - 1] != num:
                 compat.append(num)
         return compat[2] if len(compat) >= 3 else compat[0]
-        
