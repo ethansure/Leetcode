@@ -5,4 +5,4 @@ class Solution {
             i = (j += i) - i;
         return i;
     }
-}
+}-
