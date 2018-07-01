@@ -1,3 +1,20 @@
+## July 1
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        pdic = {'(':')',')':'(','{':'}','}':'{','[':']',']':'['}
+        ps = []
+        for c in s:
+            if len(ps) == 0 or pdic[ps[-1]] != c:
+                ps.append(c)
+            else:
+                ps.pop()
+        return len(ps) == 0   
+        
+# Old  Version
 class Solution(object):
     def isValid(self, s):
         """
@@ -15,4 +32,4 @@ class Solution(object):
                     stack.pop()
                 else:
                     stack.append(i)
-        return len(stack) == 0
+        return len(stack) == 0     
