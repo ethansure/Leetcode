@@ -1,3 +1,20 @@
+#July 2
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        sumCounterDict = {0:1}
+        for num in nums:
+            tdict = {}
+            for s in sumCounterDict:
+                tdict[s-num] = sumCounterDict.get(s,0) + tdict.get(s-num,0)
+                tdict[s+num] = sumCounterDict.get(s,0) + tdict.get(s+num,0)
+            sumCounterDict = tdict
+        return sumCounterDict.get(S,0)
+        
 class Solution(object):
     def findTargetSumWays(self, nums, S):
         """
