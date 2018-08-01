@@ -1,33 +1,53 @@
-public static List<TreeNode> generateTrees(int n) {
-    List<TreeNode>[] result = new List[n + 1];
-    result[0] = new ArrayList<TreeNode>();
-    if (n == 0) {
-        return result[0];
-    }
-
-    result[0].add(null);
-    for (int len = 1; len <= n; len++) {
-        result[len] = new ArrayList<TreeNode>();
-        for (int j = 0; j < len; j++) {
-            for (TreeNode nodeL : result[j]) {
-                for (TreeNode nodeR : result[len - j - 1]) {
-                    TreeNode node = new TreeNode(j + 1);
-                    node.left = nodeL;
-                    node.right = clone(nodeR, j + 1);
-                    result[len].add(node);
-                }
-            }
-        }
-    }
-    return result[n];
-}
-
-private static TreeNode clone(TreeNode n, int offset) {
-    if (n == null) {
-        return null;
-    }
-    TreeNode node = new TreeNode(n.val + offset);
-    node.left = clone(n.left, offset);
-    node.right = clone(n.right, offset);
-    return node;
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+  public List<TreeNode> generateTrees(int n) {
+      List<TreeNode> res = new ArrayList<>(); 
+      if (n < 1) {
+          return res;
+      }
+      res = enumerate(1, n);
+      return res;
+  }
+  
+  public List<TreeNode> enumerate(int low, int high) {
+      
+      List<TreeNode> res = new ArrayList<>();
+      
+      if (low > high) {
+          res.add(null);
+          return res;
+      }
+      
+      if (low == high) {
+          TreeNode n = new TreeNode(low);
+          res.add(n);
+          return res;
+      }
+      
+      List<TreeNode> left = new ArrayList<>();
+      List<TreeNode> right = new ArrayList<>();
+      for(int i = low; i <= high; i++) {
+          left = enumerate(low, i - 1);
+          right = enumerate(i + 1, high);
+          
+          for(TreeNode ln:left) {
+              for(TreeNode rn:right) {
+                  TreeNode n = new TreeNode(i);
+                  n.left = ln;
+                  n.right = rn;
+                  res.add(n);
+              }
+          }
+      }
+      
+      return res;
+  }
 }
